@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Personal Quiz</title>
+  <title>Test</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="overlay" id="overlay"></div>
   <div class="container">
     <div class="card">
-      <p id="question">هل تفضل الهدوء على الأماكن الصاخبة؟</p>
+      <p id="question">هل تحب مشاركة أفكارك؟</p>
       <div class="answers">
-        <div class="answer-circle" onclick="answer('yes')">نعم</div>
-        <div class="answer-circle" onclick="answer('no')">لا</div>
-        <div class="answer-circle" onclick="answer('write')">أكتب رأيك</div>
+        <div class="answer-circle" onclick="handleChoice('yes')">نعم</div>
+        <div class="answer-circle" onclick="handleChoice('no')">لا</div>
+        <div class="answer-circle write" onclick="showWriteAnswer(this)">أكتب</div>
       </div>
-      <div id="answerBox" class="answer-box" style="display:none;"></div>
     </div>
   </div>
-  
+
+  <div class="write-box" id="writeBox">
+    <textarea placeholder="اكتب رأيك هنا..."></textarea>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
