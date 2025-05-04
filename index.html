@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Personal Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome, Answer This Question:</h1>
+    <div id="questionBox">
+      <p id="questionText">Do you like surprises?</p>
+      <button onclick="submitAnswer('Yes')">Yes</button>
+      <button onclick="submitAnswer('No')">No</button>
+      <input type="text" id="customAnswer" placeholder="Your own answer">
+      <button onclick="submitCustom()">Submit</button>
+    </div>
+    <div id="thankYou" style="display:none;">
+      <p>Thank you for your answer!</p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
