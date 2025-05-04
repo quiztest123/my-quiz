@@ -2,24 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Personal Quiz</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Personal Test</h1>
     <div class="card">
       <p id="question">هل تفضل الهدوء على الأماكن الصاخبة؟</p>
-      <div class="buttons">
-        <button onclick="answer('yes')">نعم</button>
-        <button onclick="answer('no')">لا</button>
-        <button onclick="writeAnswer()">أكتب رأيك</button>
+      <div class="answers">
+        <div class="answer-circle" onclick="answer('yes')">نعم</div>
+        <div class="answer-circle" onclick="answer('no')">لا</div>
+        <div class="answer-circle" onclick="answer('write')">أكتب رأيك</div>
       </div>
-      <textarea id="textAnswer" placeholder="اكتب رأيك هنا..." style="display:none;"></textarea>
+      <div id="answerBox" class="answer-box" style="display:none;"></div>
     </div>
   </div>
-
+  
   <script src="script.js"></script>
 </body>
 </html>
-
