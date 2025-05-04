@@ -1,20 +1,9 @@
-function submitAnswer(answer) {
-  console.log("Answer:", answer);
-  showThankYou();
+function answer(choice) {
+  alert("إجابتك: " + choice);
+  // تقدر تضيف هنا إرسال الإجابة لسيرفر أو تخزينها لاحقًا
 }
 
-function submitCustom() {
-  const custom = document.getElementById("customAnswer").value;
-  if (custom) {
-    console.log("Custom Answer:", custom);
-    showThankYou();
-  } else {
-    alert("Please write something!");
-  }
+function writeAnswer() {
+  const textarea = document.getElementById("textAnswer");
+  textarea.style.display = "block";
 }
-
-function showThankYou() {
-  document.getElementById("questionBox").style.display = "none";
-  document.getElementById("thankYou").style.display = "block";
-}
-

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Personal Quiz</title>
+  <meta charset="UTF-8">
+  <title>Personal Quiz</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Welcome, Answer This Question:</h1>
-    <div id="questionBox">
-      <p id="questionText">Do you like surprises?</p>
-      <button onclick="submitAnswer('Yes')">Yes</button>
-      <button onclick="submitAnswer('No')">No</button>
-      <input type="text" id="customAnswer" placeholder="Your own answer">
-      <button onclick="submitCustom()">Submit</button>
-    </div>
-    <div id="thankYou" style="display:none;">
-      <p>Thank you for your answer!</p>
+    <h1>Personal Test</h1>
+    <div class="card">
+      <p id="question">هل تفضل الهدوء على الأماكن الصاخبة؟</p>
+      <div class="buttons">
+        <button onclick="answer('yes')">نعم</button>
+        <button onclick="answer('no')">لا</button>
+        <button onclick="writeAnswer()">أكتب رأيك</button>
+      </div>
+      <textarea id="textAnswer" placeholder="اكتب رأيك هنا..." style="display:none;"></textarea>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
+
