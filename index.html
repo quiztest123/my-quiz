@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار خاص</title>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="overlay" id="overlay"></div>
-  <div class="container">
-    <div class="card">
-      <p id="question">هل تحب مشاركة أفكارك؟</p>
-      <div class="answers">
-        <div class="answer-circle" onclick="handleChoice('yes')">نعم</div>
-        <div class="answer-circle" onclick="handleChoice('no')">لا</div>
-        <div class="answer-circle write" onclick="showWriteAnswer(this)">أكتب</div>
-      </div>
-    </div>
-  </div>
+  <div id="app">
+    <header>
+      <h1>اختبار خاص لك</h1>
+      <div id="progress"><span id="progress-bar"></span></div>
+    </header>
 
-  <div class="write-box" id="writeBox">
-    <textarea placeholder="اكتب رأيك هنا..."></textarea>
+    <main id="question-card">
+      <p id="question-text">هل تحب المفاجآت؟</p>
+      <div class="answers">
+        <button class="answer-button" onclick="answer('yes')">نعم</button>
+        <button class="answer-button" onclick="answer('no')">لا</button>
+        <button class="answer-button write-button" onclick="showWriteInput()">أكتب</button>
+      </div>
+    </main>
+
+    <div id="write-area" class="hidden">
+      <textarea id="user-input" placeholder="اكتب رأيك هنا..."></textarea>
+    </div>
+
+    <div id="overlay" onclick="hideWriteInput()"></div>
   </div>
 
   <script src="script.js"></script>

@@ -1,24 +1,20 @@
-function handleChoice(choice) {
-  alert("اخترت: " + choice);
+const writeBtn = document.getElementById('writeBtn');
+const writeArea = document.getElementById('write-area');
+const overlay = document.getElementById('overlay');
+
+function showWriteInput() {
+  writeBtn.classList.add('active');
+  writeArea.classList.remove('hidden');
+  overlay.classList.add('active');
 }
 
-function showWriteAnswer(el) {
-  const overlay = document.getElementById("overlay");
-  const writeBox = document.getElementById("writeBox");
+function hideWriteInput() {
+  writeBtn.classList.remove('active');
+  writeArea.classList.add('hidden');
+  overlay.classList.remove('active');
+}
 
-  // نسخ الزر وتحريكه
-  const rect = el.getBoundingClientRect();
-  const animatedDiv = document.createElement("div");
-  animatedDiv.className = "write-circle-animate";
-  document.body.appendChild(animatedDiv);
-
-  overlay.style.display = "block";
-  writeBox.style.display = "block";
-
-  // عند الضغط خارج الكتابة
-  overlay.onclick = () => {
-    overlay.style.display = "none";
-    writeBox.style.display = "none";
-    animatedDiv.remove();
-  };
+function answer(type) {
+  alert('اخترت: ' + type);
+  // لاحقًا: انتقل للسؤال التالي هنا
 }
