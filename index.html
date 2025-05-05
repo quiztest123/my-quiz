@@ -1,35 +1,59 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>اختبار خاص</title>
-  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استبيان تفاعلي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // تهيئة Tailwind CSS (اختياري، للتخصيص)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-  <div id="app">
-    <header>
-      <h1>اختبار خاص لك</h1>
-      <div id="progress"><span id="progress-bar"></span></div>
-    </header>
+<body class="font-sans transition-colors duration-1000 ease-in-out">
+    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
 
-    <main id="question-card">
-      <p id="question-text">هل تحب المفاجآت؟</p>
-      <div class="answers">
-        <button class="answer-button" onclick="answer('yes')">نعم</button>
-        <button class="answer-button" onclick="answer('no')">لا</button>
-        <button class="answer-button write-button" onclick="showWriteInput()">أكتب</button>
-      </div>
-    </main>
+        <div id="question-container" class="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-xl text-center max-w-lg w-full transition-all duration-500 ease-in-out transform scale-100">
+            <p id="question-text" class="text-xl md:text-2xl font-medium text-gray-800 mb-16">...</p> <div class="flex justify-center space-x-6 md:space-x-10 rtl:space-x-reverse mt-8">
+                <button id="yes-button" onclick="handleAnswer('yes')" class="answer-button bg-green-500 hover:bg-green-600 text-white">
+                    نعم
+                </button>
+                <button id="no-button" onclick="handleAnswer('no')" class="answer-button bg-red-500 hover:bg-red-600 text-white">
+                    لا
+                </button>
+                <button id="other-button" onclick="showOtherInput()" class="answer-button bg-blue-500 hover:bg-blue-600 text-white">
+                    اخر
+                </button>
+            </div>
+        </div>
 
-    <div id="write-area" class="hidden">
-      <textarea id="user-input" placeholder="اكتب رأيك هنا..."></textarea>
+        <div id="other-input-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out">
+            <div class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full">
+                <h3 class="text-lg font-medium mb-4 text-gray-700">أضف إجابتك:</h3>
+                <textarea id="other-answer-text" class="w-full h-24 p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none" placeholder="اكتب هنا..."></textarea>
+                <div class="flex justify-end space-x-3 rtl:space-x-reverse">
+                     <button onclick="hideOtherInput()" class="py-2 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                        إلغاء
+                    </button>
+                    <button onclick="saveOtherAnswer()" class="py-2 px-5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                        حفظ
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div id="overlay" onclick="hideWriteInput()"></div>
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

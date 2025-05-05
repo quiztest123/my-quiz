@@ -1,126 +1,113 @@
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-  overflow-x: hidden;
+// --- عناصر الواجهة ---
+const questionTextElement = document.getElementById('question-text');
+const questionContainer = document.getElementById('question-container');
+const otherInputModal = document.getElementById('other-input-modal');
+const otherAnswerText = document.getElementById('other-answer-text');
+const bodyElement = document.body;
+
+// --- بيانات الأسئلة ---
+const questions = [
+    { text: "هل تستمتع بقضاء الوقت في الطبيعة؟", intensity: 'calm' },
+    { text: "هل تفضل العمل بمفردك أم ضمن فريق؟", intensity: 'medium' },
+    { text: "هل تؤمن بوجود حياة خارج كوكب الأرض؟", intensity: 'medium' },
+    { text: "هل أنت مستعد لتغيير جذري في حياتك المهنية؟", intensity: 'intense' },
+    { text: "هل تعتقد أن الذكاء الاصطناعي سيغير العالم بشكل إيجابي؟", intensity: 'intense' },
+    { text: "انتهت الأسئلة! شكراً لك.", intensity: 'calm' } // سؤال النهاية
+];
+
+// --- حالة اللعبة ---
+let currentQuestionIndex = 0;
+let userAnswers = []; // مصفوفة لتخزين إجابات المستخدم (اختياري)
+
+// --- الدوال ---
+
+/**
+ * يعرض السؤال الحالي ويغير الخلفية.
+ */
+function displayQuestion() {
+    // التحقق مما إذا كانت هناك أسئلة متبقية
+    if (currentQuestionIndex >= questions.length) {
+        console.log("لا توجد أسئلة أخرى.");
+        // يمكنك هنا عرض رسالة نهاية أو إعادة توجيه المستخدم
+        questionTextElement.textContent = "انتهت الأسئلة! شكراً لك.";
+        // إخفاء الأزرار عند الانتهاء
+        document.querySelector('.flex.justify-center').style.display = 'none';
+        updateBackground('calm'); // إعادة الخلفية لحالة هادئة
+        return;
+    }
+
+    const question = questions[currentQuestionIndex];
+
+    // إضافة تأثير الخروج قبل تغيير السؤال
+    questionContainer.classList.add('exiting');
+
+    // الانتظار حتى ينتهي تأثير الخروج ثم تحديث المحتوى
+    setTimeout(() => {
+        questionTextElement.textContent = question.text;
+        updateBackground(question.intensity); // تحديث الخلفية
+
+        // إزالة تأثير الخروج وإعادة العنصر للظهور
+        questionContainer.classList.remove('exiting');
+    }, 500); // يجب أن تتطابق هذه المدة مع مدة الانتقال في CSS
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  position: relative;
+/**
+ * يحدّث لون الخلفية بناءً على شدة السؤال.
+ * @param {string} intensity - شدة السؤال ('calm', 'medium', 'intense').
+ */
+function updateBackground(intensity) {
+    // إزالة أي فئات خلفية سابقة
+    bodyElement.classList.remove('bg-calm', 'bg-medium', 'bg-intense');
+    // إضافة الفئة الجديدة
+    bodyElement.classList.add(`bg-${intensity}`);
 }
 
-header {
-  position: absolute;
-  top: 1rem;
-  text-align: center;
-  color: #fff;
+/**
+ * يعالج إجابة المستخدم وينتقل للسؤال التالي.
+ * @param {string} answerType - نوع الإجابة ('yes', 'no').
+ */
+function handleAnswer(answerType) {
+    console.log(`السؤال ${currentQuestionIndex + 1}: ${answerType}`); // تسجيل الإجابة (اختياري)
+    userAnswers.push({ question: questions[currentQuestionIndex].text, answer: answerType }); // تخزين الإجابة
+
+    // الانتقال للسؤال التالي
+    currentQuestionIndex++;
+    displayQuestion();
 }
 
-#progress {
-  width: 100px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  margin: 0.5rem auto;
+/**
+ * يظهر النافذة المنبثقة لإدخال النص.
+ */
+function showOtherInput() {
+    otherInputModal.classList.add('visible');
+    otherAnswerText.value = ''; // مسح حقل النص السابق
+    otherAnswerText.focus(); // التركيز على حقل النص
 }
 
-#progress-bar {
-  display: block;
-  width: 30%;
-  height: 100%;
-  background: white;
-  border-radius: 4px;
-  transition: width 0.4s ease;
+/**
+ * يخفي النافذة المنبثقة لإدخال النص.
+ */
+function hideOtherInput() {
+    otherInputModal.classList.remove('visible');
 }
 
-#question-card {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2rem;
-  border-radius: 2rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 500px;
-  width: 100%;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(4px);
+/**
+ * يحفظ إجابة المستخدم من النافذة المنبثقة وينتقل للسؤال التالي.
+ */
+function saveOtherAnswer() {
+    const answer = otherAnswerText.value.trim();
+    console.log(`السؤال ${currentQuestionIndex + 1}: other - ${answer}`); // تسجيل الإجابة
+    userAnswers.push({ question: questions[currentQuestionIndex].text, answer: answer || 'اخر (فارغ)' }); // تخزين الإجابة
+
+    hideOtherInput(); // إخفاء النافذة
+
+    // الانتقال للسؤال التالي
+    currentQuestionIndex++;
+    displayQuestion();
 }
 
-.answers {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
-}
-
-.answer-button {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: white;
-  border: none;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.answer-button:hover {
-  transform: scale(1.1);
-}
-
-.write-button.active {
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  transform: translate(-50%, 50%) scale(1.5);
-  border-radius: 1rem;
-  width: 300px;
-  height: 60px;
-  z-index: 10;
-}
-
-#write-area {
-  position: absolute;
-  bottom: 35%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-#user-input {
-  width: 80%;
-  max-width: 400px;
-  height: 100px;
-  border-radius: 1rem;
-  padding: 1rem;
-  font-size: 1rem;
-  border: none;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  resize: none;
-}
-
-#overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-  z-index: 5;
-  display: none;
-}
-
-#overlay.active {
-  display: block;
-}
-
-.hidden {
-  display: none;
-}
+// --- بدء التطبيق ---
+// عرض السؤال الأول عند تحميل الصفحة
+window.onload = () => {
+    displayQuestion();
+};
